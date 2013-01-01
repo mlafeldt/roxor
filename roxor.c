@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
-int read_file(uint8_t **buf, size_t *size, const char *path)
+static int read_file(uint8_t **buf, size_t *size, const char *path)
 {
 	FILE *fp;
 
@@ -31,27 +31,29 @@ int read_file(uint8_t **buf, size_t *size, const char *path)
 	return 0;
 }
 
-int find_xor_byte(const unsigned char *buf, long bufsize, const char *passwd)
+static int attack(const uint8_t *ciphertext, size_t ciphertext_len, const char *crib)
 {
-	int i, j, pwlen, hits = 0;
-	unsigned char key = 0, oldkey, ch;
+	size_t i, j, hits = 0;
+	uint8_t key = 0, old_key;
+	size_t crib_len = strlen(crib);
 
-	pwlen = strlen(passwd);
+	printf("Searching for XOR-encrypted password '%s' (%zd bytes) ...\n", crib, crib_len);
 
-	printf("Searching for XOR-encrypted password '%s' (%d bytes) ...\n", passwd, pwlen);
-
-	for (i = 0; i < bufsize; i++) {
-		oldkey = buf[i] ^ passwd[0];
+	for (i = 0; i < ciphertext_len; i++) {
+		old_key = ciphertext[i] ^ crib[0];
 		j = 1;
-		while ((j < pwlen) && ((i+j) < bufsize) && (key = buf[i+j] ^ passwd[j]) == oldkey) {
-			oldkey = key;
+
+		while ((j < crib_len) && ((i + j) < ciphertext_len) &&
+				(key = ciphertext[i + j] ^ crib[j]) == old_key) {
+			old_key = key;
 			j++;
 		}
-		if (j == pwlen) {
-			printf("Found password at 0x%08X, key = 0x%02X\n", i, key);
+
+		if (j == crib_len) {
+			printf("Found password at 0x%08zX, key = 0x%02X\n", i, key);
 			printf("Decrypted preview:\n");
-			for (j = 0; (j < 50) && ((i+j) < bufsize); j++) {
-				ch = buf[i+j] ^ key;
+			for (j = 0; (j < 50) && ((i+j) < ciphertext_len); j++) {
+				char ch = ciphertext[i+j] ^ key;
 				if (!isprint(ch))
 					ch = '.';
 				printf("%c", ch);
@@ -86,7 +88,7 @@ int main(int argc, char *argv[])
 	printf("File name = %s\n", filename);
 	printf("File size = %lu bytes\n", ciphertext_len);
 
-	find_xor_byte(ciphertext, ciphertext_len, crib);
+	attack(ciphertext, ciphertext_len, crib);
 
 	free(ciphertext);
 
