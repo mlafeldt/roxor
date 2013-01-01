@@ -1,16 +1,22 @@
-CC = gcc
-CFLAGS = -Wall -Werror -O2
 prefix = $(HOME)
+
+CC = gcc
+INSTALL = install
+RM = rm -f
+
+CFLAGS = -Wall -Werror -O2
+LDFLAGS =
 
 PROG = roxor
 OBJS = roxor.o
 
 all: $(PROG)
 
-install: $(PROG)
-	install $(PROG) $(prefix)/bin
-
 $(PROG): $(OBJS)
+
+install: all
+	$(INSTALL) -d -m 755 '$(prefix)/bin/'
+	$(INSTALL) $(PROG) '$(prefix)/bin/'
 
 clean:
 	$(RM) $(PROG) $(OBJS)
