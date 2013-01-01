@@ -1,7 +1,35 @@
-#include <ctype.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
+int read_file(uint8_t **buf, size_t *size, const char *path)
+{
+	FILE *fp;
+
+	fp = fopen(path, "rb");
+	if (fp == NULL)
+		return -1;
+
+	fseek(fp, 0, SEEK_END);
+	*size = ftell(fp);
+
+	*buf = malloc(*size);
+	if (*buf == NULL) {
+		fclose(fp);
+		return -1;
+	}
+
+	fseek(fp, 0, SEEK_SET);
+	if (fread(*buf, *size, 1, fp) != 1) {
+		fclose(fp);
+		return -1;
+	}
+
+	fclose(fp);
+	return 0;
+}
 
 int find_xor_byte(const unsigned char *buf, long bufsize, const char *passwd)
 {
@@ -38,45 +66,30 @@ int find_xor_byte(const unsigned char *buf, long bufsize, const char *passwd)
 
 int main(int argc, char *argv[])
 {
-	FILE *fp;
-	unsigned char *buf;
-	long filesize;
+	char *filename = NULL, *crib = NULL;
+	uint8_t *ciphertext = NULL;
+	size_t ciphertext_len;
 
 	if (argc < 3) {
-		return -1;
+		fprintf(stderr, "usage: roxor <file> <crib>\n");
+		return 1;
 	}
 
-	fp = fopen(argv[1], "rb");
-	if (fp == NULL) {
-		fprintf(stderr, "Error: Can't open file '%s' for reading\n", argv[1]);
-		return -2;
-	}
-	printf("File name = %s\n", argv[1]);
+	filename = argv[1];
+	crib = argv[2];
 
-	fseek(fp, 0, SEEK_END);
-	filesize = ftell(fp);
-	if (!filesize) {
-		fclose(fp);
-		return -3;
-	}
-	printf("File size = %lu bytes\n", filesize);
-
-	buf = malloc(filesize);
-	if (buf == NULL) {
-		fclose(fp);
-		return -4;
+	if (read_file(&ciphertext, &ciphertext_len, filename)) {
+		fprintf(stderr, "%s: read error\n", filename);
+		return 1;
 	}
 
-	fseek(fp, 0, SEEK_SET);
-	if (fread(buf, filesize, 1, fp) != 1) {
-		fclose(fp);
-		return -5;
-	}
-	fclose(fp);
+	printf("File name = %s\n", filename);
+	printf("File size = %lu bytes\n", ciphertext_len);
 
-	find_xor_byte(buf, filesize, argv[2]);
+	find_xor_byte(ciphertext, ciphertext_len, crib);
 
-	free(buf);
+	free(ciphertext);
+
 	printf("Done!\n");
 
 	return 0;
