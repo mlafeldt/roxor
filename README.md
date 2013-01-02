@@ -7,8 +7,18 @@ Tool to crack XOR-encrypted passwords
 Installation
 ------------
 
+To build roxor from source, simply run:
+
     $ git clone git://github.com/mlafeldt/roxor.git
     $ cd roxor/
+    $ make
+    $ make install
+
+CMake is supported as well:
+
+    $ mkdir build
+    $ cd build/
+    $ cmake ..
     $ make
     $ make install
 

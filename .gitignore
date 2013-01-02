@@ -1,2 +1,4 @@
+*.exe
 *.o
-roxor
+/build/
+/roxor
