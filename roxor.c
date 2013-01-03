@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include <ctype.h>	/* isprint() */
 
 static int read_file(uint8_t **buf, size_t *size, const char *path)
 {
@@ -31,13 +31,15 @@ static int read_file(uint8_t **buf, size_t *size, const char *path)
 	return 0;
 }
 
-static int attack(const uint8_t *ciphertext, size_t ciphertext_len, const char *crib)
+/*
+ * The XOR operator is vulnerable to a known-plaintext attack, since
+ * plaintext XOR ciphertext = key.
+ */
+static void attack_cipher(const uint8_t *ciphertext, size_t ciphertext_len,
+		const uint8_t *crib, size_t crib_len)
 {
-	size_t i, j, hits = 0;
+	size_t i, j;
 	uint8_t key = 0, old_key;
-	size_t crib_len = strlen(crib);
-
-	printf("Searching for XOR-encrypted password '%s' (%zd bytes) ...\n", crib, crib_len);
 
 	for (i = 0; i < ciphertext_len; i++) {
 		old_key = ciphertext[i] ^ crib[0];
@@ -52,25 +54,24 @@ static int attack(const uint8_t *ciphertext, size_t ciphertext_len, const char *
 		if (j == crib_len) {
 			printf("Found password at 0x%08zX, key = 0x%02X\n", i, key);
 			printf("Decrypted preview:\n");
-			for (j = 0; (j < 50) && ((i+j) < ciphertext_len); j++) {
-				char ch = ciphertext[i+j] ^ key;
+
+			for (j = 0; (j < 50) && ((i + j) < ciphertext_len); j++) {
+				char ch = ciphertext[i + j] ^ key;
 				if (!isprint(ch))
 					ch = '.';
 				printf("%c", ch);
 			}
+
 			printf("\n");
-			hits++;
 		}
 	}
-
-	return hits;
 }
 
 int main(int argc, char *argv[])
 {
 	char *filename = NULL, *crib = NULL;
 	uint8_t *ciphertext = NULL;
-	size_t ciphertext_len;
+	size_t ciphertext_len, crib_len;
 
 	if (argc < 3) {
 		fprintf(stderr, "usage: roxor <file> <crib>\n");
@@ -79,6 +80,7 @@ int main(int argc, char *argv[])
 
 	filename = argv[1];
 	crib = argv[2];
+	crib_len = strlen(crib);
 
 	if (read_file(&ciphertext, &ciphertext_len, filename)) {
 		fprintf(stderr, "%s: read error\n", filename);
@@ -87,8 +89,10 @@ int main(int argc, char *argv[])
 
 	printf("File name = %s\n", filename);
 	printf("File size = %lu bytes\n", ciphertext_len);
+	printf("Searching for XOR-encrypted password '%s' (%zd bytes) ...\n",
+			crib, crib_len);
 
-	attack(ciphertext, ciphertext_len, crib);
+	attack_cipher(ciphertext, ciphertext_len, (uint8_t*)crib, crib_len);
 
 	free(ciphertext);
 
