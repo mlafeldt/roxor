@@ -5,6 +5,8 @@ roxor allows you to crack XOR-encrypted passwords.
 
 Back in the PSX days, I've used a similar tool to get the passwords (cheats) from
 some Playstation games. I was quite successful - mainly due to lousy 8-bit keys.
+I can also remember decrypting subroutines of Libcrypt (Sony's copy protection
+code) the same way, though the keys were 32 bits long.
 
 
 Installation
