@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>roxor by mlafeldt</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>roxor</h1>
+        <h2>Tool to crack XOR-encrypted passwords</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/mlafeldt/roxor/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/mlafeldt/roxor/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/mlafeldt/roxor" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>roxor</h1>
+
+<p>Tool to crack XOR-encrypted passwords</p>
+
+<h2>Installation</h2>
+
+<p>To build roxor from source, simply run:</p>
+
+<pre><code>$ git clone git://github.com/mlafeldt/roxor.git
+$ cd roxor/
+$ make
+$ make install
+</code></pre>
+
+<p>CMake is supported as well:</p>
+
+<pre><code>$ mkdir build
+$ cd build/
+$ cmake ..
+$ make
+$ make install
+</code></pre>
+
+<h2>Usage</h2>
+
+<pre><code>usage: roxor &lt;file&gt; &lt;crib&gt;
+</code></pre>
+
+<h2>Examples</h2>
+
+<p>roxor was able to get the passwords for these PSX games:</p>
+
+<p><em>Colin McRae Rally</em></p>
+
+<pre><code>$ roxor FRONTEND.EXE openroads
+Found text at 0x51ff8 (XOR key 0x13)
+  preview: openroads...shoeboxes...silkysmooth.backseat....mo
+</code></pre>
+
+<p><em>Need For Speed 3</em></p>
+
+<pre><code>$ roxor NFS3-Benutzername.bin playtm
+Found text at 0x13f4c (XOR key 0x01)
+  preview: playtm..xcav8...xcntry..mnbeam..gldfsh..mcityz..se
+</code></pre>
+
+<p><em>TOCA - World Touring Cars</em></p>
+
+<pre><code>$ roxor SLES_025.72 THUMBS
+Found text at 0x3d534 (XOR key 0x0f)
+  preview: THUMBS..REARFEAR....MADCAB..VANISHING...KERBKRAWL.
+</code></pre>
+
+<h2>License</h2>
+
+<p>roxor is licensed under the terms of the MIT License. See <a href="https://github.com/mlafeldt/roxor/blob/master/LICENSE">LICENSE</a> file.</p>
+
+<h2>Contact</h2>
+
+<ul>
+<li>Web: <a href="http://mlafeldt.github.com/roxor">http://mlafeldt.github.com/roxor</a>
+</li>
+<li>Mail: <a href="mailto:mathias.lafeldt@gmail.com">mathias.lafeldt@gmail.com</a>
+</li>
+<li>Twitter: <a href="https://twitter.com/mlafeldt">@mlafeldt</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
