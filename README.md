@@ -1,7 +1,10 @@
 roxor
 =====
 
-Tool to crack XOR-encrypted passwords
+roxor allows you to crack XOR-encrypted passwords.
+
+Back in the PSX days, I've used a similar tool to get the passwords (cheats) from
+some Playstation games. I was quite successful - mainly due to lousy 8-bit keys.
 
 
 Installation
@@ -27,6 +30,11 @@ Usage
 -----
 
     usage: roxor <file> <crib>
+
+Simply pass roxor the file with the ciphertext and a crib (sample of known
+plaintext, e.g. a password you already know). roxor will then attack the cipher
+and output the file offset, the XOR key, and a decrypted preview for each match.
+
 
 Examples
 --------
