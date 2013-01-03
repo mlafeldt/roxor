@@ -30,7 +30,12 @@
       <section id="main_content">
         <h1>roxor</h1>
 
-<p>Tool to crack XOR-encrypted passwords</p>
+<p>roxor allows you to crack XOR-encrypted passwords.</p>
+
+<p>Back in the PSX days, I've used a similar tool to get the passwords (cheats) from
+some Playstation games. I was quite successful - mainly due to lousy 8-bit keys.
+I can also remember decrypting subroutines of Libcrypt (Sony's copy protection
+code) the same way, though the keys were 32 bits long.</p>
 
 <h2>Installation</h2>
 
@@ -55,6 +60,10 @@ $ make install
 
 <pre><code>usage: roxor &lt;file&gt; &lt;crib&gt;
 </code></pre>
+
+<p>Simply pass roxor the file with the ciphertext and a crib (sample of known
+plaintext, e.g. a password you already know). roxor will then attack the cipher
+and output the file offset, the XOR key, and a decrypted preview for each match.</p>
 
 <h2>Examples</h2>
 
