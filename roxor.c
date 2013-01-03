@@ -52,8 +52,7 @@ static void attack_cipher(const uint8_t *ciphertext, size_t ciphertext_len,
 		}
 
 		if (j == crib_len) {
-			printf("Found password at 0x%08zX, key = 0x%02X\n", i, key);
-			printf("Decrypted preview:\n");
+			printf("Found text at 0x%08zx, XOR key: 0x%02x, preview: ", i, key);
 
 			for (j = 0; (j < 50) && ((i + j) < ciphertext_len); j++) {
 				char ch = ciphertext[i + j] ^ key;
@@ -87,16 +86,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	printf("File name = %s\n", filename);
-	printf("File size = %lu bytes\n", ciphertext_len);
-	printf("Searching for XOR-encrypted password '%s' (%zd bytes) ...\n",
-			crib, crib_len);
-
 	attack_cipher(ciphertext, ciphertext_len, (uint8_t*)crib, crib_len);
-
 	free(ciphertext);
-
-	printf("Done!\n");
-
 	return 0;
 }
