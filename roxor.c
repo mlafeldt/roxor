@@ -60,7 +60,8 @@ static void attack_cipher(const uint8_t *ciphertext, size_t ciphertext_len,
 		}
 
 		if (j == crib_len) {
-			printf("Found text at 0x%08zx, XOR key: 0x%02x, preview: ", i, key);
+			printf("Found text at 0x%zx (XOR key 0x%02x)\n", i, key);
+			printf("  preview: ");
 
 			for (j = 0; (j < 50) && ((i + j) < ciphertext_len); j++) {
 				char ch = ciphertext[i + j] ^ key;
