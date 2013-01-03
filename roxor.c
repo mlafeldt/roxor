@@ -64,7 +64,7 @@ static void attack_cipher(const uint8_t *ciphertext, size_t ciphertext_len,
 			printf("  preview: ");
 
 			for (j = 0; (j < 50) && ((i + j) < ciphertext_len); j++) {
-				char ch = ciphertext[i + j] ^ key;
+				uint8_t ch = ciphertext[i + j] ^ key;
 				if (!isprint(ch))
 					ch = '.';
 				printf("%c", ch);
