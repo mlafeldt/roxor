@@ -28,6 +28,29 @@ Usage
 
     usage: roxor <file> <crib>
 
+Examples
+--------
+
+roxor was able to get the passwords for these PSX games:
+
+*Colin McRae Rally*
+
+    $ roxor FRONTEND.EXE openroads
+    Found text at 0x51ff8 (XOR key 0x13)
+      preview: openroads...shoeboxes...silkysmooth.backseat....mo
+
+*Need For Speed 3*
+
+    $ roxor NFS3-Benutzername.bin playtm
+    Found text at 0x13f4c (XOR key 0x01)
+      preview: playtm..xcav8...xcntry..mnbeam..gldfsh..mcityz..se
+
+*TOCA - World Touring Cars*
+
+    $ roxor SLES_025.72 THUMBS
+    Found text at 0x3d534 (XOR key 0x0f)
+      preview: THUMBS..REARFEAR....MADCAB..VANISHING...KERBKRAWL.
+
 
 License
 -------
