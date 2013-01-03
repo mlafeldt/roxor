@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2013 Mathias Lafeldt <mathias.lafeldt@gmail.com>
+ *
+ * This file is part of roxor.
+ *
+ * roxor is licensed under the terms of the MIT License. See LICENSE file.
+ */
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
