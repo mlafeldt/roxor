@@ -90,8 +90,19 @@ int main(int argc, char *argv[])
 	crib = argv[2];
 	crib_len = strlen(crib);
 
+	if (crib_len < 2) {
+		fprintf(stderr, "error: crib too short\n");
+		return 1;
+	}
+
 	if (read_file(&ciphertext, &ciphertext_len, filename)) {
 		fprintf(stderr, "%s: read error\n", filename);
+		return 1;
+	}
+
+	if (ciphertext_len < crib_len) {
+		fprintf(stderr, "error: ciphertext too short\n");
+		free(ciphertext);
 		return 1;
 	}
 
