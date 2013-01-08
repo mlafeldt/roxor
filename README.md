@@ -27,6 +27,8 @@ CMake is supported as well:
     $ make
     $ make install
 
+There's also a Ruby implementation, `roxor.rb`, that works out of the box.
+
 
 Usage
 -----
