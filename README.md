@@ -39,6 +39,9 @@ Simply pass roxor the file with the ciphertext and a crib (sample of known
 plaintext, e.g. a password you already know). roxor will then attack the cipher
 and output the file offset, the XOR key, and a decrypted preview for each match.
 
+Note that for the attack to succeed, the crib must be at least two characters
+long, and the ciphertext must be longer than the crib.
+
 
 Examples
 --------
