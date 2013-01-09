@@ -30,7 +30,7 @@ module Roxor
         puts "  preview: %s" %
           (ciphertext[offset, 50].map do |ch|
             ch ^= key
-            isprint(ch) ? "%c" % ch : "."
+            printable?(ch) ? "%c" % ch : "."
           end.join)
       end
     end
@@ -61,8 +61,8 @@ module Roxor
       str.bytes.to_a
     end
 
-    def isprint(ch)
-        ch >= 32 && ch <= 126
+    def printable?(ch)
+      ch >= 32 && ch <= 126
     end
   end
 end
