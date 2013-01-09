@@ -19,8 +19,8 @@ module Roxor
       abort "usage: roxor <file> <crib>" if @args.length < 2
 
       filename = @args.shift
-      crib = @args.shift.bytes.to_a
-      ciphertext = File.read(filename).bytes.to_a
+      crib = bytes(@args.shift)
+      ciphertext = bytes(File.read(filename))
 
       abort "error: crib too short" if crib.length < 2
       abort "error: ciphertext too short" if ciphertext.length < crib.length
@@ -55,6 +55,10 @@ module Roxor
 
         offset += 1
       end
+    end
+
+    def bytes(str)
+      str.bytes.to_a
     end
 
     def isprint(ch)
