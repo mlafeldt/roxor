@@ -27,7 +27,7 @@ CMake is supported as well:
     $ make
     $ make install
 
-There's also a Ruby implementation, `roxor.rb`, that works out of the box.
+There's also a Ruby implementation, [roxor.rb], that works out of the box.
 
 
 Usage
@@ -82,3 +82,4 @@ Contact
 
 
 [LICENSE]: https://github.com/mlafeldt/roxor/blob/master/LICENSE
+[roxor.rb]: https://github.com/mlafeldt/roxor/blob/master/roxor.rb
