@@ -12,22 +12,15 @@ code) the same way, though the keys were 32 bits long.
 Installation
 ------------
 
-To build roxor from source, simply run:
+First, make sure you have [Go 1] installed.
 
-    $ git clone git://github.com/mlafeldt/roxor.git
-    $ cd roxor/
-    $ make
-    $ make install
+To download and install roxor from source, simply run:
 
-CMake is supported as well:
+    $ go get github.com/mlafeldt/roxor
 
-    $ mkdir build
-    $ cd build/
-    $ cmake ..
-    $ make
-    $ make install
+This should install the roxor command to `$GOPATH/bin/roxor`.
 
-There's also a Ruby implementation, [roxor.rb], that works out of the box.
+(You can find alternative implementations of roxor inside the [alt] directory.)
 
 
 Usage
@@ -81,5 +74,6 @@ Contact
 * Twitter: [@mlafeldt](https://twitter.com/mlafeldt)
 
 
+[Go 1]: http://golang.org/doc/install
 [LICENSE]: https://github.com/mlafeldt/roxor/blob/master/LICENSE
-[roxor.rb]: https://github.com/mlafeldt/roxor/blob/master/roxor.rb
+[alt]: https://github.com/mlafeldt/roxor/tree/master/alt

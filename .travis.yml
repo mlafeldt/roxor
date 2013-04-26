@@ -1,14 +1,9 @@
-language: c
+language: go
 
-compiler:
-  - gcc
-  - clang
+install: make build
 
-install:
-  - mkdir build
-  - cd build
-  - cmake ..
-  - make
-  - sudo make install
+script: make test
 
-script: "true" # no tests yet
+branches:
+  only:
+    - master
