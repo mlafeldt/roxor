@@ -1,8 +1,10 @@
 language: go
 
-install: make build
+go:
+  - 1.0
+  - 1.1
 
-script: make test
+script: ./script/test
 
 branches:
   only:
