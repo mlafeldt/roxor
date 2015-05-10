@@ -5,6 +5,10 @@ use std::io::prelude::*;
 use std::path::Path;
 use std::process;
 
+fn isprint(ch: u8) -> bool {
+    ch >= 32 && ch <= 126
+}
+
 fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) {
     for (i, x) in ciphertext.iter().enumerate() {
         let mut old_key = x ^ crib[0];
@@ -15,7 +19,17 @@ fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) {
             old_key = key;
             j += 1;
             if j == crib.len() {
-                println!("Found text at 0x{:x} (XOR key 0x{:02x})", i, key)
+                println!("Found text at 0x{:x} (XOR key 0x{:02x})", i, key);
+                print!("  preview: ");
+                for ch in &ciphertext[i..i+50] {
+                    let raw = ch ^ key;
+                    if isprint(raw) {
+                        print!("{}", raw as char);
+                    } else {
+                        print!(".");
+                    }
+                }
+                println!("");
             }
         }
     }
