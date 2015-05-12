@@ -2,6 +2,7 @@ use std::env;
 use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
+use std::io::stderr;
 use std::path::Path;
 use std::process;
 
@@ -29,17 +30,17 @@ fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) {
 }
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    if args.len() < 3 {
-        println!("usage: roxor <file> <crib>");
+    let args: Vec<String> = env::args().skip(1).collect();
+    if args.len() < 2 {
+        writeln!(stderr(), "usage: roxor <file> <crib>").unwrap();
         process::exit(1);
     }
 
-    let path = Path::new(&args[1]);
-    let crib: Vec<u8> = args[2].bytes().collect();
+    let path = Path::new(&args[0]);
+    let crib: Vec<u8> = args[1].bytes().collect();
 
     if crib.len() < 2 {
-        println!("error: crib too short");
+        writeln!(stderr(), "error: crib too short").unwrap();
         process::exit(1);
     }
 
@@ -52,7 +53,7 @@ fn main() {
     file.read_to_end(&mut ciphertext).unwrap();
 
     if ciphertext.len() < crib.len() {
-        println!("error: ciphertext too short");
+        writeln!(stderr(), "error: ciphertext too short").unwrap();
         process::exit(1);
     }
 
