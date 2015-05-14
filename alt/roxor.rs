@@ -6,29 +6,6 @@ use std::io::stderr;
 use std::path::Path;
 use std::process;
 
-fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) {
-    for (i, x) in ciphertext.iter().enumerate() {
-        let mut old_key = x ^ crib[0];
-        let mut j = 1;
-        while j < crib.len() && (i+j) < ciphertext.len() {
-            let key = ciphertext[i+j] ^ crib[j];
-            if key != old_key { break; }
-            old_key = key;
-            j += 1;
-            if j == crib.len() {
-                println!("Found text at 0x{:x} (XOR key 0x{:02x})", i, key);
-                print!("  preview: ");
-                let preview: String = ciphertext[i..i+50]
-                    .iter()
-                    .map(|x| x ^ key)
-                    .map(|x| if x >= 32 && x <= 126 {x as char} else {'.'})
-                    .collect();
-                println!("{}", preview);
-            }
-        }
-    }
-}
-
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
     if args.len() < 2 {
@@ -58,4 +35,27 @@ fn main() {
     }
 
     attack_cipher(ciphertext, crib);
+}
+
+fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) {
+    for (i, x) in ciphertext.iter().enumerate() {
+        let mut old_key = x ^ crib[0];
+        let mut j = 1;
+        while j < crib.len() && (i+j) < ciphertext.len() {
+            let key = ciphertext[i+j] ^ crib[j];
+            if key != old_key { break; }
+            old_key = key;
+            j += 1;
+            if j == crib.len() {
+                println!("Found text at 0x{:x} (XOR key 0x{:02x})", i, key);
+                print!("  preview: ");
+                let preview: String = ciphertext[i..i+50]
+                    .iter()
+                    .map(|x| x ^ key)
+                    .map(|x| if x >= 32 && x <= 126 {x as char} else {'.'})
+                    .collect();
+                println!("{}", preview);
+            }
+        }
+    }
 }
