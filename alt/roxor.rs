@@ -40,16 +40,14 @@ fn main() {
         process::exit(1);
     }
 
-    match attack_cipher(ciphertext, crib) {
-        Some(m) => {
-            println!("Found text at 0x{:x} (XOR key 0x{:02x})", m.offset, m.key);
-            println!("  preview: {}", m.preview);
-        },
-        None => {},
-    };
+    for m in attack_cipher(ciphertext, crib) {
+        println!("Found text at 0x{:x} (XOR key 0x{:02x})", m.offset, m.key);
+        println!("  preview: {}", m.preview);
+    }
 }
 
-fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) -> Option<Match> {
+fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) -> Vec<Match> {
+    let mut matches: Vec<Match> = Vec::new();
     for (i, x) in ciphertext.iter().enumerate() {
         let mut old_key = x ^ crib[0];
         let mut j = 1;
@@ -64,9 +62,9 @@ fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) -> Option<Match> {
                     .map(|x| x ^ key)
                     .map(|x| if x >= 32 && x <= 126 {x as char} else {'.'})
                     .collect();
-                return Some(Match { offset: i, key: key, preview: preview })
+                matches.push(Match { offset: i, key: key, preview: preview });
             }
         }
     }
-    return None
+    return matches;
 }
