@@ -1,5 +1,4 @@
 use std::env;
-use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::stderr;
@@ -28,7 +27,7 @@ fn main() {
     }
 
     let mut file = match File::open(&path) {
-        Err(why) => panic!("couldn't open {}: {}", path.display(), Error::description(&why)),
+        Err(why) => panic!("couldn't open {}: {}", path.display(), why),
         Ok(file) => file,
     };
 
