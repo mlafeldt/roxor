@@ -1,12 +1,11 @@
-Alternative Implementations
-===========================
+# Alternative implementations
 
-roxor was originally written in C and later reimplemented in Ruby and Go.
+roxor was originally written in C and later reimplemented in other languages for
+fun and profit.
 
 Even though Go is now the main implementation, you can still use the other ones.
 
-C
--
+## C
 
 To build roxor from `roxor.c`, simply run:
 
@@ -21,7 +20,12 @@ CMake is supported as well:
     $ make
     $ make install
 
-Ruby
-----
+## Ruby
 
 There's also a Ruby implementation, `roxor.rb`, that works out of the box.
+
+## Rust
+
+To compile the Rust implementation, run this:
+
+    $ rustc -O roxor.rs
