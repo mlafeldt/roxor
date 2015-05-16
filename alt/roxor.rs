@@ -7,6 +7,7 @@ use std::process;
 
 const PREVIEW_LEN: usize = 50;
 
+#[derive(Debug, PartialEq)]
 struct Match {
     offset: usize,
     key: u8,
@@ -69,4 +70,62 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
         }
     }
     return matches;
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Match, attack_cipher};
+
+    struct Test {
+        ciphertext: Vec<u8>,
+        crib: Vec<u8>,
+        matches: Vec<Match>,
+    }
+
+    #[test]
+    fn test_attack_cipher() {
+        let tests = vec![
+            Test {
+                ciphertext: vec![],
+                crib: vec![],
+                matches: vec![],
+            },
+            Test {
+                ciphertext: "haystack".bytes().collect(),
+                crib: "needle".bytes().collect(),
+                matches: vec![],
+            },
+            Test {
+                ciphertext: "needle in haystack".bytes().collect(),
+                crib: "needle".bytes().collect(),
+                matches: vec![
+                    Match { offset: 0, key: 0, preview: "needle in haystack".to_string() },
+                ],
+            },
+            Test {
+                ciphertext: "a needle, another needle".bytes().collect(),
+                crib: "needle".bytes().collect(),
+                matches: vec![
+                    Match { offset: 2, key: 0, preview: "needle, another needle".to_string() },
+                    Match { offset: 18, key: 0, preview: "needle".to_string() },
+                ],
+            },
+            Test {
+                ciphertext: vec![
+                    0x23, 0x62, 0x2c, 0x27, 0x27, 0x26, 0x2e, 0x27,
+                    0x6e, 0x62, 0x23, 0x2c, 0x2d, 0x36, 0x2a, 0x27,
+                    0x30, 0x62, 0x2c, 0x27, 0x27, 0x26, 0x2e, 0x27,
+                ],
+                crib: "needle".bytes().collect(),
+                matches: vec![
+                    Match { offset: 2, key: 0x42, preview: "needle, another needle".to_string() },
+                    Match { offset: 18, key: 0x42, preview: "needle".to_string() },
+                ],
+            },
+        ];
+
+        for t in tests.iter() {
+            assert_eq!(t.matches, attack_cipher(&t.ciphertext[..], &t.crib[..]));
+        }
+    }
 }
