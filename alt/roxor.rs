@@ -19,7 +19,7 @@ fn main() {
     }
 
     let path = Path::new(&args[0]);
-    let crib: Vec<u8> = args[1].bytes().collect();
+    let crib = args[1].as_bytes();
 
     if crib.len() < 2 {
         writeln!(stderr(), "error: crib too short").unwrap();
@@ -39,13 +39,13 @@ fn main() {
         process::exit(1);
     }
 
-    for m in attack_cipher(ciphertext, crib) {
+    for m in attack_cipher(&ciphertext[..], crib) {
         println!("Found text at 0x{:x} (XOR key 0x{:02x})", m.offset, m.key);
         println!("  preview: {}", m.preview);
     }
 }
 
-fn attack_cipher(ciphertext: Vec<u8>, crib: Vec<u8>) -> Vec<Match> {
+fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
     let mut matches: Vec<Match> = Vec::new();
     for (i, x) in ciphertext.iter().enumerate() {
         let mut old_key = x ^ crib[0];
