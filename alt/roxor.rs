@@ -5,6 +5,8 @@ use std::io::stderr;
 use std::path::Path;
 use std::process;
 
+const PREVIEW_LEN: usize = 50;
+
 struct Match {
     offset: usize,
     key: u8,
@@ -56,8 +58,9 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
             old_key = key;
             j += 1;
             if j == crib.len() {
-                let preview: String = ciphertext[i..i+50]
+                let preview: String = ciphertext[i..]
                     .iter()
+                    .take(PREVIEW_LEN)
                     .map(|x| x ^ key)
                     .map(|x| if x >= 32 && x <= 126 {x as char} else {'.'})
                     .collect();
