@@ -77,8 +77,8 @@ mod tests {
     use super::{Match, attack_cipher};
 
     struct Test {
-        ciphertext: Vec<u8>,
-        crib: Vec<u8>,
+        ciphertext: &'static [u8],
+        crib: &'static [u8],
         matches: Vec<Match>,
     }
 
@@ -86,37 +86,33 @@ mod tests {
     fn test_attack_cipher() {
         let tests = vec![
             Test {
-                ciphertext: vec![],
-                crib: vec![],
+                ciphertext: &[],
+                crib: &[],
                 matches: vec![],
             },
             Test {
-                ciphertext: "haystack".bytes().collect(),
-                crib: "needle".bytes().collect(),
+                ciphertext: b"haystack",
+                crib: b"needle",
                 matches: vec![],
             },
             Test {
-                ciphertext: "needle in haystack".bytes().collect(),
-                crib: "needle".bytes().collect(),
+                ciphertext: b"needle in haystack",
+                crib: b"needle",
                 matches: vec![
                     Match { offset: 0, key: 0, preview: "needle in haystack".to_string() },
                 ],
             },
             Test {
-                ciphertext: "a needle, another needle".bytes().collect(),
-                crib: "needle".bytes().collect(),
+                ciphertext: b"a needle, another needle",
+                crib: b"needle",
                 matches: vec![
                     Match { offset: 2, key: 0, preview: "needle, another needle".to_string() },
                     Match { offset: 18, key: 0, preview: "needle".to_string() },
                 ],
             },
             Test {
-                ciphertext: vec![
-                    0x23, 0x62, 0x2c, 0x27, 0x27, 0x26, 0x2e, 0x27,
-                    0x6e, 0x62, 0x23, 0x2c, 0x2d, 0x36, 0x2a, 0x27,
-                    0x30, 0x62, 0x2c, 0x27, 0x27, 0x26, 0x2e, 0x27,
-                ],
-                crib: "needle".bytes().collect(),
+                ciphertext: b"\x23\x62\x2c\x27\x27\x26\x2e\x27\x6e\x62\x23\x2c\x2d\x36\x2a\x27\x30\x62\x2c\x27\x27\x26\x2e\x27",
+                crib: b"needle",
                 matches: vec![
                     Match { offset: 2, key: 0x42, preview: "needle, another needle".to_string() },
                     Match { offset: 18, key: 0x42, preview: "needle".to_string() },
@@ -125,7 +121,7 @@ mod tests {
         ];
 
         for t in tests.iter() {
-            assert_eq!(t.matches, attack_cipher(&t.ciphertext[..], &t.crib[..]));
+            assert_eq!(t.matches, attack_cipher(t.ciphertext, t.crib));
         }
     }
 }
