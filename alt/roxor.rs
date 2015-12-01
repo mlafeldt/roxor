@@ -61,19 +61,31 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
     for (i, x) in ciphertext.iter().enumerate() {
         let mut old_key = x ^ crib[0];
         let mut j = 1;
-        while j < crib.len() && (i+j) < ciphertext.len() {
-            let key = ciphertext[i+j] ^ crib[j];
-            if key != old_key { break; }
+        while j < crib.len() && (i + j) < ciphertext.len() {
+            let key = ciphertext[i + j] ^ crib[j];
+            if key != old_key {
+                break;
+            }
             old_key = key;
             j += 1;
             if j == crib.len() {
                 let preview: String = ciphertext[i..]
-                    .iter()
-                    .take(PREVIEW_LEN)
-                    .map(|x| x ^ key)
-                    .map(|x| if x >= 32 && x <= 126 {x as char} else {'.'})
-                    .collect();
-                matches.push(Match { offset: i, key: key, preview: preview });
+                                          .iter()
+                                          .take(PREVIEW_LEN)
+                                          .map(|x| x ^ key)
+                                          .map(|x| {
+                                              if x >= 32 && x <= 126 {
+                                                  x as char
+                                              } else {
+                                                  '.'
+                                              }
+                                          })
+                                          .collect();
+                matches.push(Match {
+                    offset: i,
+                    key: key,
+                    preview: preview,
+                });
             }
         }
     }
