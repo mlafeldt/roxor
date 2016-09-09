@@ -1,11 +1,3 @@
-// Rust implementation of roxor.c
-//
-// Copyright (C) 2015 Mathias Lafeldt <mathias.lafeldt@gmail.com>
-//
-// This file is part of roxor.
-//
-// roxor is licensed under the terms of the MIT License. See LICENSE file.
-
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;

@@ -1,13 +1,4 @@
 #!/usr/bin/env ruby
-#
-# Ruby implementation of roxor.c
-#
-# Copyright (C) 2013 Mathias Lafeldt <mathias.lafeldt@gmail.com>
-#
-# This file is part of roxor.
-#
-# roxor is licensed under the terms of the MIT License. See LICENSE file.
-#
 
 module Roxor
   class Application

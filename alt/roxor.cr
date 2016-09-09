@@ -1,13 +1,3 @@
-#
-# Crystal implementation of roxor based on roxor.rb
-#
-# Copyright (C) 2016 Mathias Lafeldt <mathias.lafeldt@gmail.com>
-#
-# This file is part of roxor.
-#
-# roxor is licensed under the terms of the MIT License. See LICENSE file.
-#
-
 module Roxor
   class Application
     def initialize(argv : Array(String))
