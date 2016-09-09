@@ -29,3 +29,9 @@ There's also a Ruby implementation, `roxor.rb`, that works out of the box.
 To compile the Rust implementation, run this:
 
     $ rustc -O roxor.rs
+
+## Crystal
+
+To compile the Crystal implementation, run this:
+
+    $ crystal build --release roxor.cr
