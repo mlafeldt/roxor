@@ -62,17 +62,11 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
             j += 1;
             if j == crib.len() {
                 let preview: String = ciphertext[i..]
-                                          .iter()
-                                          .take(PREVIEW_LEN)
-                                          .map(|x| x ^ key)
-                                          .map(|x| {
-                                              if x >= 32 && x <= 126 {
-                                                  x as char
-                                              } else {
-                                                  '.'
-                                              }
-                                          })
-                                          .collect();
+                    .iter()
+                    .take(PREVIEW_LEN)
+                    .map(|x| x ^ key)
+                    .map(|x| { if x >= 32 && x <= 126 { x as char } else { '.' } })
+                    .collect();
                 matches.push(Match {
                     offset: i,
                     key: key,
