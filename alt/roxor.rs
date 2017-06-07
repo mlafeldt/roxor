@@ -65,13 +65,15 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
                     .iter()
                     .take(PREVIEW_LEN)
                     .map(|x| x ^ key)
-                    .map(|x| { if x >= 32 && x <= 126 { x as char } else { '.' } })
+                    .map(|x| if x >= 32 && x <= 126 { x as char } else { '.' })
                     .collect();
-                matches.push(Match {
-                    offset: i,
-                    key: key,
-                    preview: preview,
-                });
+                matches.push(
+                    Match {
+                        offset: i,
+                        key: key,
+                        preview: preview,
+                    },
+                );
             }
         }
     }
