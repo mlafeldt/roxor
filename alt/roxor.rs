@@ -67,13 +67,11 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
                     .map(|x| x ^ key)
                     .map(|x| if x >= 32 && x <= 126 { x as char } else { '.' })
                     .collect();
-                matches.push(
-                    Match {
-                        offset: i,
-                        key: key,
-                        preview: preview,
-                    },
-                );
+                matches.push(Match {
+                    offset: i,
+                    key: key,
+                    preview: preview,
+                });
             }
         }
     }
@@ -82,7 +80,7 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
 
 #[cfg(test)]
 mod tests {
-    use super::{Match, attack_cipher};
+    use super::{attack_cipher, Match};
 
     struct Test {
         ciphertext: &'static [u8],
