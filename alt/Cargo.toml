@@ -1,6 +1,6 @@
 [package]
 name = "roxor"
-version = "0.1.0"
+version = "1.0.0"
 description = "Tool to crack XOR-encrypted passwords"
 authors = ["Mathias Lafeldt <mathias.lafeldt@gmail.com>"]
 license = "MIT"
