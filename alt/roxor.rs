@@ -29,7 +29,10 @@ fn main() {
     }
 
     let mut file = match File::open(&path) {
-        Err(why) => panic!("couldn't open {}: {}", path.display(), why),
+        Err(why) => {
+            eprintln!("error: failed to open {}: {}", path.display(), why);
+            process::exit(1);
+        }
         Ok(file) => file,
     };
 
