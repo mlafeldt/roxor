@@ -1,0 +1,14 @@
+[package]
+name = "roxor"
+version = "0.1.0"
+description = "Tool to crack XOR-encrypted passwords"
+authors = ["Mathias Lafeldt <mathias.lafeldt@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/mlafeldt/roxor"
+documentation = "https://github.com/mlafeldt/roxor"
+edition = "2018"
+include = ["roxor.rs"]
+
+[[bin]]
+name = "roxor"
+path = "roxor.rs"
