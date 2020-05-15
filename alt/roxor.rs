@@ -1,7 +1,6 @@
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
-use std::io::stderr;
 use std::path::Path;
 use std::process;
 
@@ -17,7 +16,7 @@ struct Match {
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
     if args.len() < 2 {
-        writeln!(stderr(), "usage: roxor <file> <crib>").unwrap();
+        eprintln!("usage: roxor <file> <crib>");
         process::exit(1);
     }
 
@@ -25,7 +24,7 @@ fn main() {
     let crib = args[1].as_bytes();
 
     if crib.len() < 2 {
-        writeln!(stderr(), "error: crib too short").unwrap();
+        eprintln!("error: crib too short");
         process::exit(1);
     }
 
@@ -38,7 +37,7 @@ fn main() {
     file.read_to_end(&mut ciphertext).unwrap();
 
     if ciphertext.len() < crib.len() {
-        writeln!(stderr(), "error: ciphertext too short").unwrap();
+        eprintln!("error: ciphertext too short");
         process::exit(1);
     }
 
@@ -69,13 +68,13 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
                     .collect();
                 matches.push(Match {
                     offset: i,
-                    key: key,
-                    preview: preview,
+                    key,
+                    preview,
                 });
             }
         }
     }
-    return matches;
+    matches
 }
 
 #[cfg(test)]
