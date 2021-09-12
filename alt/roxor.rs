@@ -129,7 +129,7 @@ mod tests {
         ];
 
         for t in tests.iter() {
-            assert_eq!(t.matches, attack_cipher(t.ciphertext, t.crib));
+            assert_eq!(attack_cipher(t.ciphertext, t.crib), t.matches);
         }
     }
 }
