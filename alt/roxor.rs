@@ -28,7 +28,7 @@ fn main() {
         process::exit(1);
     }
 
-    let mut file = match File::open(&path) {
+    let mut file = match File::open(path) {
         Err(why) => {
             eprintln!("error: failed to open {}: {}", path.display(), why);
             process::exit(1);
@@ -67,7 +67,13 @@ fn attack_cipher(ciphertext: &[u8], crib: &[u8]) -> Vec<Match> {
                     .iter()
                     .take(PREVIEW_LEN)
                     .map(|x| x ^ key)
-                    .map(|x| if x >= 32 && x <= 126 { x as char } else { '.' })
+                    .map(|x| {
+                        if (32..=126).contains(&x) {
+                            x as char
+                        } else {
+                            '.'
+                        }
+                    })
                     .collect();
                 matches.push(Match {
                     offset: i,

@@ -6,7 +6,7 @@ authors = ["Mathias Lafeldt <mathias.lafeldt@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/mlafeldt/roxor"
 documentation = "https://github.com/mlafeldt/roxor"
-edition = "2018"
+edition = "2021"
 include = ["roxor.rs"]
 
 [[bin]]
