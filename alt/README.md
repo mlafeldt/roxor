@@ -1,7 +1,6 @@
 # Alternative implementations
 
-roxor was originally written in C and later reimplemented in other languages for
-fun and profit.
+roxor was originally written in C and later reimplemented in other languages for fun and profit.
 
 Even though Go is now the main implementation, you can still use the other ones.
 
@@ -24,14 +23,20 @@ CMake is supported as well:
 
 There's also a Ruby implementation, `roxor.rb`, that works out of the box.
 
-## Rust
-
-To compile the Rust implementation, run this:
-
-    $ cargo build
-
 ## Crystal
 
-To compile the Crystal implementation, run this:
+To compile the Crystal implementation:
 
     $ crystal build --release roxor.cr
+
+## Rust
+
+To compile the Rust implementation:
+
+    $ cargo build --release
+
+## Zig
+
+To compile the Zig implementation:
+
+    $ zig build-exe -O ReleaseFast roxor.zig
