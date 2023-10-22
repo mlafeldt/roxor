@@ -66,14 +66,6 @@ License
 roxor is licensed under the terms of the MIT License. See [LICENSE] file.
 
 
-Contact
--------
-
-* Web: <http://mlafeldt.github.com/roxor>
-* Mail: <mathias.lafeldt@gmail.com>
-* Twitter: [@mlafeldt](https://twitter.com/mlafeldt)
-
-
 [Go 1]: http://golang.org/doc/install
 [LICENSE]: https://github.com/mlafeldt/roxor/blob/master/LICENSE
 [alt]: https://github.com/mlafeldt/roxor/tree/master/alt
