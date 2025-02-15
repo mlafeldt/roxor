@@ -13,7 +13,7 @@ zig build-exe roxor.c -O ReleaseFast --library c
 ## Zig
 
 ```console
-zig build-exe roxor.zig -O ReleaseFast
+zig build --release=fast
 ```
 
 ## Rust

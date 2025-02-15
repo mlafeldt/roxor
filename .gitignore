@@ -1,2 +1,5 @@
 roxor
 target
+.zig-cache
+zig-cache
+zig-out

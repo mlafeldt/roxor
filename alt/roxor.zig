@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const PREVIEW_LEN: usize = 50;
+const preview_len = 50;
 
 const Match = struct {
     offset: usize,
@@ -19,7 +19,7 @@ pub fn main() !void {
     const args = try std.process.argsAlloc(allocator);
     if (args.len < 3) {
         try stderr.print("usage: {s} <file> <crib>\n", .{args[0]});
-        std.os.exit(1);
+        std.process.exit(1);
     }
 
     const path = args[1];
@@ -30,7 +30,7 @@ pub fn main() !void {
 
     if (ciphertext.len < crib.len) {
         try stderr.print("error: ciphertext too short\n", .{});
-        std.os.exit(1);
+        std.process.exit(1);
     }
 
     for (try attackCipher(ciphertext, crib, allocator)) |match| {
@@ -51,9 +51,9 @@ fn attackCipher(ciphertext: []const u8, crib: []const u8, allocator: std.mem.All
             old_key = key;
             j += 1;
             if (j == crib.len) {
-                var preview = try allocator.allocSentinel(u8, @min(PREVIEW_LEN, ciphertext.len - i), 0);
+                var preview = try allocator.allocSentinel(u8, @min(preview_len, ciphertext.len - i), 0);
                 j = 0;
-                while (j < PREVIEW_LEN and (i + j) < ciphertext.len) : (j += 1) {
+                while (j < preview_len and (i + j) < ciphertext.len) : (j += 1) {
                     const ch = ciphertext[i + j] ^ key;
                     preview[j] = if (std.ascii.isPrint(ch)) ch else '.';
                 }
